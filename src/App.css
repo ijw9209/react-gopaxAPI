@@ -6,12 +6,46 @@
   background-color: #171b23;
 }
 
-.tab_menu{
+.Wrap{
+  width: 80%;
+  height: 100px;
   border : 1px solid white;
   margin-top: 20px;
 }
 
-.main_menu{
+.table_Wrap{
+  width: 80%;
   border : 1px solid white;
   height: 600px;
+}
+
+.cate_ul{
+  color: white;
+  padding-top: 38px;
+  padding-left: 40px;
+}
+
+.cate_ul li {
+  width: 100px;
+  height: 100px;
+  float:left;
+  cursor: pointer;
+}
+
+.search_form{
+  float: right;
+}
+
+.list_table {
+  color : white;
+  width: 80%;
+}
+
+
+tbody td{
+  padding-top : 30px;
+}
+
+ul .active {
+  color : red;
 }

@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './components/header.js';
+import CoinList from './components/coinList';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './reset.css'
 import './App.css';
 
 
 class App extends Component {
   state = {
-    assetsList: []
+    selectCate: "KRW",
+    assetsList: [],
+    input: ''
   };
 
+
+  handleChange = e => {
+    console.log(e.target.value);
+    this.setState({
+      input: e.target.value
+    })
+  }
   // getAssetNames = async () => {
   //   try {
   //     const res = await fetch('/assets')
@@ -23,25 +34,27 @@ class App extends Component {
   //   }
 
   // }
-  // componentDidMount() {
-  //   this.getAssetNames();
-  // }
+
+  getTraidingPairs = async () => {
+    try {
+      const res = await fetch('/trading-pairs/stats')
+        .then(res => res.json());
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  componentDidMount() {
+    //  this.getAssetNames();
+    this.getTraidingPairs();
+  }
   render() {
+    const { input } = this.state;
     return (
       <div className="App">
-        <div className="container">
-          <div className="row tab_menu">
-            <div className="col-10 mx-auto col-md-8 mt-4">
-              1 col
-            </div>
-          </div>
-          <div className="row main_menu mt-4">
-            <div className="col main_menu">
-              2 col
-              </div>
-          </div>
-        </div>
-
+        <Header input={input} onChange={this.handleChange} />
+        <CoinList />
       </div>
     );
   }
