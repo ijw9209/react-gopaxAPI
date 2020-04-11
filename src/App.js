@@ -10,7 +10,8 @@ import './App.css';
 class App extends Component {
   state = {
     selectCate: "KRW",
-    assetsList: [],
+    assetName: [],
+    assetList: [],
     input: ''
   };
 
@@ -21,40 +22,45 @@ class App extends Component {
       input: e.target.value
     })
   }
-  // getAssetNames = async () => {
-  //   try {
-  //     const res = await fetch('/assets')
-  //       .then(res => res.json());
-  //     console.log(res);
-  //     this.setState({
-  //       assetSList: res
-  //     })
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
+  getAssetNames = async () => {
+    try {
+      const res = await fetch('/assets')
+        .then(res => res.json());
+      this.setState({
+        assetName: res
+      })
+    } catch (e) {
+      console.log(e);
+    }
 
-  // }
+  }
 
   getTraidingPairs = async () => {
     try {
       const res = await fetch('/trading-pairs/stats')
         .then(res => res.json());
       console.log(res);
+      this.setState({
+        assetList: res
+      })
     } catch (e) {
       console.log(e);
     }
   }
 
   componentDidMount() {
-    //  this.getAssetNames();
+    this.getAssetNames();
     this.getTraidingPairs();
   }
   render() {
-    const { input } = this.state;
+    const { input, assetName, assetList } = this.state;
     return (
       <div className="App">
         <Header input={input} onChange={this.handleChange} />
-        <CoinList />
+        <CoinList
+          assetName={assetName}
+          assetList={assetList}
+        />
       </div>
     );
   }

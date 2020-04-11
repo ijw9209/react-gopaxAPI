@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import CoinListData from './coinListData';
+import shortid from 'shortid';
 
 class coinList extends Component {
     render() {
+        const { assetName, assetList } = this.props;
+        const Namefilter = assetName.filter(item => item.id !== "KRW");
+        console.log(Namefilter);
         return (
             <div className="table_Wrap mx-auto">
                 <table className="list_table mx-auto">
@@ -17,12 +22,18 @@ class coinList extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>비트코인</td>
-                            <td>8,429,000</td>
-                            <td>-4.57%</td>
-                            <td>8,429,000</td>
-                            <td>8,360,000</td>
-                            <td>41억 KRW</td>
+                            {assetList.map(list => (
+                                <CoinListData
+                                    key={shortid.generate()}
+                                    nameList={Namefilter}
+                                    name={list.name}
+                                    open={list.open}
+                                    high={list.high}
+                                    low={list.low}
+                                    close={list.close}
+                                    volume={list.volume}
+                                />
+                            ))}
                         </tr>
                     </tbody>
                 </table>
