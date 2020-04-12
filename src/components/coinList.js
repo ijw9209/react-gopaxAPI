@@ -6,6 +6,7 @@ class coinList extends Component {
     render() {
         const { assetName, assetList, selectCate } = this.props;
         const coinList = assetList.filter(item => item.name.indexOf(selectCate) > -1);
+        console.log(coinList);
         return (
             <div className="table_Wrap mx-auto">
                 <table className="list_table mx-auto">
@@ -15,7 +16,7 @@ class coinList extends Component {
                         <col width="124px"></col>
                         <col width="100px"></col>
                         <col width="100px"></col>
-                        <col width="100px"></col>
+                        <col width="140px"></col>
                     </colgroup>
                     <thead>
                         <tr>
@@ -38,6 +39,7 @@ class coinList extends Component {
                                 low={list.low}
                                 close={list.close}
                                 volume={list.volume}
+                                selectCate={selectCate}
                             />
                         ))}
                     </tbody>
