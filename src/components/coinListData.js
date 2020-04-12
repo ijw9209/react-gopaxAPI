@@ -8,6 +8,11 @@ class coinListData extends Component {
         return (
             <tr>
                 <td>{coinName}</td>
+                <td>{close}</td>
+                <td>변동</td>
+                <td>{high}</td>
+                <td>{low}</td>
+                <td>거래량</td>
             </tr>
         );
     }
