@@ -10,6 +10,7 @@ class header extends Component {
         this.setState({
             active: e.target.textContent
         })
+        this.props.changeMoney(e.target.textContent)
     }
 
     render() {

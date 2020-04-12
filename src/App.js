@@ -15,13 +15,18 @@ class App extends Component {
     input: ''
   };
 
+  changeMoney = select => {
+    this.setState({
+      selectCate: select
+    });
+  };
 
   handleChange = e => {
-    console.log(e.target.value);
     this.setState({
       input: e.target.value
-    })
-  }
+    });
+  };
+
   getAssetNames = async () => {
     try {
       const res = await fetch('/assets')
@@ -39,7 +44,6 @@ class App extends Component {
     try {
       const res = await fetch('/trading-pairs/stats')
         .then(res => res.json());
-      console.log(res);
       this.setState({
         assetList: res
       })
@@ -52,12 +56,18 @@ class App extends Component {
     this.getAssetNames();
     this.getTraidingPairs();
   }
+
+
   render() {
-    const { input, assetName, assetList } = this.state;
+    const { input, assetName, assetList, selectCate } = this.state;
     return (
       <div className="App">
-        <Header input={input} onChange={this.handleChange} />
+        <Header
+          changeMoney={this.changeMoney}
+          input={input}
+          onChange={this.handleChange} />
         <CoinList
+          selectCate={selectCate}
           assetName={assetName}
           assetList={assetList}
         />

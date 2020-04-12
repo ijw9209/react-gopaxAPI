@@ -4,12 +4,19 @@ import shortid from 'shortid';
 
 class coinList extends Component {
     render() {
-        const { assetName, assetList } = this.props;
-        const Namefilter = assetName.filter(item => item.id !== "KRW");
-        console.log(Namefilter);
+        const { assetName, assetList, selectCate } = this.props;
+        const coinList = assetList.filter(item => item.name.indexOf(selectCate) > -1);
         return (
             <div className="table_Wrap mx-auto">
                 <table className="list_table mx-auto">
+                    <colgroup>
+                        <col width="300px"></col>
+                        <col width="150px"></col>
+                        <col width="124px"></col>
+                        <col width="100px"></col>
+                        <col width="100px"></col>
+                        <col width="100px"></col>
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>이름</th>
@@ -21,20 +28,18 @@ class coinList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            {assetList.map(list => (
-                                <CoinListData
-                                    key={shortid.generate()}
-                                    nameList={Namefilter}
-                                    name={list.name}
-                                    open={list.open}
-                                    high={list.high}
-                                    low={list.low}
-                                    close={list.close}
-                                    volume={list.volume}
-                                />
-                            ))}
-                        </tr>
+                        {coinList.map(list => (
+                            <CoinListData
+                                key={shortid.generate()}
+                                nameList={assetName}
+                                name={list.name}
+                                open={list.open}
+                                high={list.high}
+                                low={list.low}
+                                close={list.close}
+                                volume={list.volume}
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>
