@@ -24,7 +24,6 @@ class coinList extends Component {
         const coinList = assetList.filter(item => item.name.indexOf(selectCate) > -1);
         console.log(this.upDown);
         coinList.sort((a, b) => {
-            let answer = 1;
 
 
             if (selectSort === 'name') {
@@ -47,6 +46,7 @@ class coinList extends Component {
                     return 0;
                 }
             }
+            return 0;
         });
 
 
