@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class header extends Component {
     state = {
-        active: '',
+        active: 'KRW'
 
     }
 

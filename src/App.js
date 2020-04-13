@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Header from './components/header.js';
 import CoinList from './components/coinList';
 
@@ -8,11 +9,13 @@ import './App.css';
 
 
 class App extends Component {
+
+
   state = {
     selectCate: "KRW",
     assetName: [],
     assetList: [],
-    input: ''
+    input: '',
   };
 
   changeMoney = select => {
@@ -29,23 +32,21 @@ class App extends Component {
 
   getAssetNames = async () => {
     try {
-      const res = await fetch('/assets')
-        .then(res => res.json());
+
+      const res = await axios.get('/assets');
       this.setState({
-        assetName: res
+        assetName: res.data
       })
     } catch (e) {
       console.log(e);
     }
-
   }
 
   getTraidingPairs = async () => {
     try {
-      const res = await fetch('/trading-pairs/stats')
-        .then(res => res.json());
+      const res = await axios.get('/trading-pairs/stats')
       this.setState({
-        assetList: res
+        assetList: res.data
       })
     } catch (e) {
       console.log(e);
@@ -53,8 +54,13 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this._ismounted = true;
     this.getAssetNames();
     this.getTraidingPairs();
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
   }
 
 

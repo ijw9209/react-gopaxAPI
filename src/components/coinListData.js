@@ -16,10 +16,7 @@ class coinListData extends Component {
 
         const strPrice = num => {
             const str = num + "";
-            console.log(str);
-            console.log(str.substring(0, 3));
             if (str.length > 4) {
-
                 if (str.length > 8) {
                     const sub = str.substring(0, 2);
                     const numParse = Number(sub);
@@ -36,7 +33,7 @@ class coinListData extends Component {
 
         return (
             <tr>
-                <td>{coinName}</td>
+                <td>{name.slice(0, 3)}/{coinName}</td>
                 <td>{cate(close)}</td>
                 <td>{rateOfCharge}%</td>
                 <td>{cate(high)}</td>
