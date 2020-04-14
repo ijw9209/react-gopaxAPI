@@ -7,15 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './reset.css'
 import './App.css';
 
-
 class App extends Component {
-
+  _isMounted = false;
 
   state = {
     selectCate: "KRW",
     assetName: [],
     assetList: [],
     input: '',
+    loading: false
   };
 
   changeMoney = select => {
@@ -31,8 +31,8 @@ class App extends Component {
   };
 
   getAssetNames = async () => {
-    try {
 
+    try {
       const res = await axios.get('/assets');
       this.setState({
         assetName: res.data
@@ -40,9 +40,11 @@ class App extends Component {
     } catch (e) {
       console.log(e);
     }
+
   }
 
   getTraidingPairs = async () => {
+
     try {
       const res = await axios.get('/trading-pairs/stats')
       this.setState({
@@ -51,16 +53,28 @@ class App extends Component {
     } catch (e) {
       console.log(e);
     }
+
+
   }
 
   componentDidMount() {
-    this._ismounted = true;
-    this.getAssetNames();
-    this.getTraidingPairs();
+    this._isMounted = true;
+
+    if (this._isMounted) {
+      this.getAssetNames();
+      this.getTraidingPairs();
+      try {
+        setInterval(async () => {
+          await this.getTraidingPairs();
+        }, 30000)
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
-  componentWillUnmount() {
-    this._ismounted = false;
+  componentWillMount() {
+    this._isMounted = false;
   }
 
 
@@ -73,6 +87,7 @@ class App extends Component {
           input={input}
           onChange={this.handleChange} />
         <CoinList
+          findName={input}
           selectCate={selectCate}
           assetName={assetName}
           assetList={assetList}

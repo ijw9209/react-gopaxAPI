@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class coinListData extends Component {
     render() {
-        const { nameList, name, open, high, low, close, volume, selectCate } = this.props;
+        const { nameList, name, open, high, low, close, volume, selectCate, findName } = this.props;
         const coinName = nameList.filter(item => name.indexOf(item.id) > -1)[1].name;
         const rateOfCharge = ((close - open) / open * 100).toFixed(2);
         const transactionPrice = Math.floor(close * volume);
@@ -31,11 +31,15 @@ class coinListData extends Component {
             }
         }
 
+        if (coinName.indexOf(findName) < 0) {
+            return null;
+        }
+
         return (
             <tr>
                 <td>{name.slice(0, 3)}/{coinName}</td>
                 <td>{cate(close)}</td>
-                <td>{rateOfCharge}%</td>
+                <td className={`data_rate ${rateOfCharge > 0 ? 'green' : (rateOfCharge === 0 ? '' : 'red')}`}>{rateOfCharge}%</td>
                 <td>{cate(high)}</td>
                 <td>{cate(low)}</td>
                 <td>{strPrice(transactionPrice) + '' + selectCate}</td>

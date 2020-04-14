@@ -20,13 +20,20 @@ class coinList extends Component {
 
     render() {
         const { selectSort } = this.state;
-        const { assetName, assetList, selectCate } = this.props;
+        const { assetName, assetList, selectCate, findName } = this.props;
         const coinList = assetList.filter(item => item.name.indexOf(selectCate) > -1);
-        console.log(this.upDown);
         coinList.sort((a, b) => {
 
+            if (selectSort === 'variations') {
+                if ((a['close'] - a['open']) / a['open'] * 100 < (b['close'] - b['open']) / b['open'] * 100) {
+                    return (this.upDown === 1) ? -1 : 1;
+                }
+            } else if (selectSort === 'transactionPrice') {
+                if ((a['close'] * a['volume']) < (b['close'] * b['volume'])) {
+                    return (this.upDown === 1) ? -1 : 1;
+                }
 
-            if (selectSort === 'name') {
+            } else if (selectSort === 'name') {
                 const nameA = a[selectSort].toUpperCase();
                 const nameB = b[selectSort].toUpperCase();
                 if (nameA < nameB && this.upDown === 1) {
@@ -51,24 +58,24 @@ class coinList extends Component {
 
 
         return (
-            <div className="table_Wrap mx-auto">
+            <div className="table_Wrap mx-auto" >
                 <table className="list_table mx-auto">
                     <colgroup>
                         <col width="300px"></col>
                         <col width="150px"></col>
                         <col width="124px"></col>
-                        <col width="100px"></col>
-                        <col width="100px"></col>
-                        <col width="140px"></col>
+                        <col width="150px"></col>
+                        <col width="150px"></col>
+                        <col width="150px"></col>
                     </colgroup>
                     <thead>
                         <tr onClick={this.handleSort}>
-                            <th className={selectSort === 'name' ? 'active' : ''} title="name">이름</th>
-                            <th className={selectSort === 'open' ? 'active' : ''} title="open">현재가</th>
-                            <th className={selectSort === '변동' ? 'active' : ''} title="variations">변동</th>
-                            <th className={selectSort === '최고가' ? 'active' : ''} title="high">최고가</th>
-                            <th className={selectSort === '최저가' ? 'active' : ''} title="low">최저가</th>
-                            <th className={selectSort === '거래대금' ? 'active' : ''} title="transactionPrice">거래대금</th>
+                            <th className={selectSort === 'name' ? 'active' : ''} title="name">이름 &#x2195;</th>
+                            <th className={selectSort === 'open' ? 'active' : ''} title="open">현재가 &#x2195;</th>
+                            <th className={selectSort === 'variations' ? 'active' : ''} title="variations">변동 &#x2195;</th>
+                            <th className={selectSort === 'high' ? 'active' : ''} title="high">최고가 &#x2195;</th>
+                            <th className={selectSort === 'low' ? 'active' : ''} title="low">최저가 &#x2195;</th>
+                            <th className={selectSort === 'transactionPrice' ? 'active' : ''} title="transactionPrice">거래대금 &#x2195;</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,11 +90,12 @@ class coinList extends Component {
                                 close={list.close}
                                 volume={list.volume}
                                 selectCate={selectCate}
+                                findName={findName}
                             />
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div >
         );
     }
 }
