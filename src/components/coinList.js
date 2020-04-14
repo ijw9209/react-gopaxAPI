@@ -25,21 +25,26 @@ class coinList extends Component {
         coinList.sort((a, b) => {
 
             if (selectSort === 'variations') {
-                if ((a['close'] - a['open']) / a['open'] * 100 < (b['close'] - b['open']) / b['open'] * 100) {
-                    return (this.upDown === 1) ? -1 : 1;
+                if ((a['close'] - a['open']) / a['open'] * 100 > (b['close'] - b['open']) / b['open'] * 100) {
+                    return (this.upDown === 1) ? 1 : -1;
+                } else if ((a['close'] - a['open']) / a['open'] * 100 < (b['close'] - b['open']) / b['open'] * 100) {
+                    return (this.upDown === 2) ? 1 : -1;
                 }
             } else if (selectSort === 'transactionPrice') {
-                if ((a['close'] * a['volume']) < (b['close'] * b['volume'])) {
-                    return (this.upDown === 1) ? -1 : 1;
+                if ((a['close'] * a['volume']) > (b['close'] * b['volume'])) {
+                    return (this.upDown === 1) ? 1 : -1;
+                } else if ((a['close'] * a['volume']) < (b['close'] * b['volume'])) {
+                    return (this.upDown === 2) ? 1 : -1;
                 }
 
-            } else if (selectSort === 'name') {
+            }
+            else if (selectSort === 'name') {
                 const nameA = a[selectSort].toUpperCase();
                 const nameB = b[selectSort].toUpperCase();
-                if (nameA < nameB && this.upDown === 1) {
-                    return -1;
-                } else if (nameA > nameB && this.upDown === 2) {
-                    return 1;
+                if (nameA > nameB && this.upDown === 1) {
+                    return (this.upDown === 1) ? 1 : -1;
+                } else if (nameA < nameB && this.upDown === 2) {
+                    return (this.upDown === 2) ? -1 : 1;
                 } else {
                     return 0;
                 }
